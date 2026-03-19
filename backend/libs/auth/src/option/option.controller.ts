@@ -1,10 +1,10 @@
 // 外部依赖
-import { Get, Post, Query, Param, Body } from '@nestjs/common';
-import type { Request } from 'express';
+import { Get, Post, Query, Param, Body } from "@nestjs/common";
+import type { Request } from "express";
 // 内部依赖
-import type { OptionEntity, OptionEntityLog } from '@shared';
-import { OptionService, OperatePipe, ReqId } from '@shared';
-import { UserId } from '@auth';
+import type { OptionEntity, OptionEntityLog } from "@shared";
+import { OptionService, OperatePipe, ReqId } from "@shared";
+import { UserId } from "@auth";
 
 /**
  * 通用配置对象控制器
@@ -26,8 +26,8 @@ export abstract class OptionController<
    * @param operateId 操作序号，用于获取增量数据
    * @returns 对象清单
    */
-  @Get('index')
-  index(@Query('operateId', OperatePipe) operateId: number) {
+  @Get("index")
+  index(@Query("operateId", OperatePipe) operateId: number) {
     return this.optionSrv.index(operateId);
   }
 
@@ -36,8 +36,8 @@ export abstract class OptionController<
    * @param key 对象键值
    * @returns 对象详情
    */
-  @Get('show/:key')
-  show(@Param('key') key: string) {
+  @Get("show/:key")
+  show(@Param("key") key: string) {
     return this.optionSrv.show(key);
   }
 
@@ -46,8 +46,8 @@ export abstract class OptionController<
    * @param key 对象键值
    * @returns 对象变更记录
    */
-  @Get('log/:key')
-  log(@Param('key') key: string) {
+  @Get("log/:key")
+  log(@Param("key") key: string) {
     return this.optionSrv.log(key);
   }
 
@@ -57,7 +57,7 @@ export abstract class OptionController<
    * @param req 请求对象
    * @returns 对象主键值
    */
-  @Post('update')
+  @Post("update")
   async update(
     @Body() value: UpdateDto,
     @UserId() userId: number,

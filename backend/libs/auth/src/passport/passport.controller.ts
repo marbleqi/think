@@ -6,14 +6,14 @@ import {
   Body,
   ParseIntPipe,
   Req,
-} from '@nestjs/common';
-import type { Request } from 'express';
+} from "@nestjs/common";
+import type { Request } from "express";
 // 内部依赖
-import type { AppRequest } from '@shared';
-import { RegisterDto, UserService } from '@auth';
+import type { AppRequest } from "@shared";
+import { RegisterDto, UserService } from "@auth";
 
 /**未登录用户控制器 */
-@Controller('passport')
+@Controller("passport")
 export class PassportController {
   /**
    * 构造函数
@@ -26,8 +26,8 @@ export class PassportController {
    * @param email 邮箱
    * @returns 邮箱状态
    */
-  @Post('status')
-  async status(@Body('email') email: string) {
+  @Post("status")
+  async status(@Body("email") email: string) {
     if (!email) {
       throw new BadRequestException(`请输入有效的邮箱！`);
     }
@@ -45,10 +45,10 @@ export class PassportController {
    * @param valid 有效期（单位：分钟）
    * @returns 校验结果
    */
-  @Post('check')
+  @Post("check")
   check(
-    @Body('code') code: string,
-    @Body('valid', ParseIntPipe) valid: number,
+    @Body("code") code: string,
+    @Body("valid", ParseIntPipe) valid: number,
   ) {
     if (!code) {
       throw new BadRequestException(`请输入有效的授权码！`);
@@ -62,7 +62,7 @@ export class PassportController {
    * @param req 请求对象
    * @returns 用户ID
    */
-  @Post('register')
+  @Post("register")
   register(@Body() value: RegisterDto, @Req() req: Request) {
     return this.userSrv.register(value, Number((req as AppRequest).reqId ?? 0));
   }
@@ -73,8 +73,8 @@ export class PassportController {
    * @param req 请求对象
    * @returns 校验结果
    */
-  @Post('activate')
-  activate(@Body('code') code: string, @Req() req: Request) {
+  @Post("activate")
+  activate(@Body("code") code: string, @Req() req: Request) {
     if (!code) {
       throw new BadRequestException(`请输入有效的激活码！`);
     }

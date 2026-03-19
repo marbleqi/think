@@ -1,6 +1,6 @@
 // 外部依赖
-import { Injectable, OnModuleDestroy } from '@nestjs/common';
-import { Subject, bufferTime, filter, mergeMap } from 'rxjs';
+import { Injectable, OnModuleDestroy } from "@nestjs/common";
+import { Subject, bufferTime, filter, mergeMap } from "rxjs";
 
 /**队列任务类型 */
 type QueueTask = () => Promise<unknown>;
@@ -28,13 +28,13 @@ export class QueueService implements OnModuleDestroy {
         next: (results) => {
           // 记录失败的任务
           results.forEach((result) => {
-            if (result.status === 'rejected') {
-              console.error('队列任务执行失败:', result.reason);
+            if (result.status === "rejected") {
+              console.error("队列任务执行失败:", result.reason);
             }
           });
         },
         error: (err) => {
-          console.error('队列处理异常:', err);
+          console.error("队列处理异常:", err);
         },
       });
   }
@@ -45,7 +45,7 @@ export class QueueService implements OnModuleDestroy {
    */
   addTask(task: QueueTask): void {
     if (this.isShuttingDown) {
-      console.warn('队列正在关闭，拒绝添加新任务');
+      console.warn("队列正在关闭，拒绝添加新任务");
       return;
     }
     this.taskSubject.next(task);

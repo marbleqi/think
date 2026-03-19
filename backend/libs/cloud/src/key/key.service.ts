@@ -1,15 +1,15 @@
 // 外部依赖
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
 import {
   Repository,
   FindOptionsSelect,
   FindOptionsWhere,
   MoreThan,
-} from 'typeorm';
+} from "typeorm";
 // 内部依赖
-import { CommonService, OperateService, QueueService } from '@shared';
-import { KeyEntity, KeyLogEntity } from '.';
+import { CommonService, OperateService, QueueService } from "@shared";
+import { KeyEntity, KeyLogEntity } from ".";
 
 @Injectable()
 export class KeyService extends CommonService<KeyEntity, KeyLogEntity> {
@@ -28,25 +28,25 @@ export class KeyService extends CommonService<KeyEntity, KeyLogEntity> {
     @InjectRepository(KeyLogEntity)
     protected readonly keyLogRepository: Repository<KeyLogEntity>,
   ) {
-    super('key', operateSrv, queueSrv, keyRepository, keyLogRepository);
+    super("key", operateSrv, queueSrv, keyRepository, keyLogRepository);
   }
 
   index(operateId: number = -1) {
     return this.keyRepository.find({
       select: [
-        'id',
-        'name',
-        'description',
-        'provider',
-        'key',
-        'status',
-        'create.userId',
-        'create.at',
-        'update.userId',
-        'update.at',
-        'update.operateId',
-        'update.operate',
-        'update.reqId',
+        "id",
+        "name",
+        "description",
+        "provider",
+        "key",
+        "status",
+        "create.userId",
+        "create.at",
+        "update.userId",
+        "update.at",
+        "update.operateId",
+        "update.operate",
+        "update.reqId",
       ] as FindOptionsSelect<KeyEntity>,
       where: {
         update: {

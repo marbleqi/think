@@ -1,10 +1,10 @@
 // 外部依赖
-import { Module } from '@nestjs/common';
-import { HttpModule } from '@nestjs/axios';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { Module } from "@nestjs/common";
+import { HttpModule } from "@nestjs/axios";
+import { TypeOrmModule } from "@nestjs/typeorm";
 // 内部依赖
-import { SharedModule } from '@shared';
-import { KongEntity, KongLogEntity, KongService, ObjectService } from '.';
+import { SharedModule } from "@shared";
+import { KongEntity, KongLogEntity, KongService, ObjectService } from ".";
 
 @Module({
   imports: [

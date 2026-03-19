@@ -1,9 +1,9 @@
 // 外部依赖
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, FindOptionsWhere, Between } from 'typeorm';
+import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository, FindOptionsWhere, Between } from "typeorm";
 // 内部依赖
-import { OperateEntity } from '@shared';
+import { OperateEntity } from "@shared";
 
 /**操作序号服务 */
 @Injectable()
@@ -52,7 +52,7 @@ export class OperateService {
     name: string,
     operate: string,
     userId: number = 0,
-    remark: string = '',
+    remark: string = "",
   ) {
     const result = await this.operateRepository.insert({
       name,

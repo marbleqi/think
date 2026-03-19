@@ -5,15 +5,15 @@ import {
   NotFoundException,
   UnauthorizedException,
   UnprocessableEntityException,
-} from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+} from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
 import {
   Repository,
   FindOptionsSelect,
   FindOptionsWhere,
   MoreThan,
-} from 'typeorm';
-import { Subject } from 'rxjs';
+} from "typeorm";
+import { Subject } from "rxjs";
 // 内部依赖
 import {
   Email,
@@ -24,8 +24,8 @@ import {
   QueueService,
   CreateEntity,
   UpdateEntity,
-} from '@shared';
-import { UserEntity, UserLogEntity } from '@auth';
+} from "@shared";
+import { UserEntity, UserLogEntity } from "@auth";
 
 /**结果 */
 export interface Result {
@@ -60,7 +60,7 @@ export class UserService extends CommonService<UserEntity, UserLogEntity> {
     @InjectRepository(UserLogEntity)
     protected readonly userLogRepository: Repository<UserLogEntity>,
   ) {
-    super('user', operateSrv, queueSrv, userRepository, userLogRepository);
+    super("user", operateSrv, queueSrv, userRepository, userLogRepository);
     this.result = new Subject<Record<string, string>>();
   }
 
@@ -71,7 +71,7 @@ export class UserService extends CommonService<UserEntity, UserLogEntity> {
    */
   async status(email: string) {
     return this.userRepository.findOne({
-      select: ['id', 'status'] as FindOptionsSelect<UserEntity>,
+      select: ["id", "status"] as FindOptionsSelect<UserEntity>,
       where: {
         email,
       } as FindOptionsWhere<UserEntity>,
@@ -97,14 +97,14 @@ export class UserService extends CommonService<UserEntity, UserLogEntity> {
       room,
     };
     /**随机码消息 */
-    const code = await this.redisSrv.addCode('login', 100, 5, cache);
+    const code = await this.redisSrv.addCode("login", 100, 5, cache);
     /**邮件链接 */
     const url = `${process.env.WEB_URL}passport/callback/${code.code}`;
     /**邮件内容 */
     const mail: Email = {
       from: `"${process.env.SMTP_USER}" <${process.env.SMTP_ACCOUNT}>`,
       to: email,
-      subject: '个人量化工具的授权登录邮件',
+      subject: "个人量化工具的授权登录邮件",
       html: `<p>请点击该<a href="${url}" target="_blank">授权登录链接</a>。</p>
       <p>或将以下地址复制到浏览器地址栏中打开：</p>
       <p>${url}</p>`,
@@ -129,17 +129,17 @@ export class UserService extends CommonService<UserEntity, UserLogEntity> {
       `login:${code}`,
     );
     if (!cache || !cache.id) {
-      throw new UnauthorizedException('授权地址已过期！');
+      throw new UnauthorizedException("授权地址已过期！");
     }
     /**用户ID */
     const id = Number(cache.id);
     /**用户 */
-    const user = await this.show(id, 'login');
+    const user = await this.show(id, "login");
     if (!user) {
-      throw new UnauthorizedException('用户还未注册！');
+      throw new UnauthorizedException("用户还未注册！");
     }
     if (!user.status) {
-      throw new UnauthorizedException('用户已被禁用！');
+      throw new UnauthorizedException("用户已被禁用！");
     }
     // 删除登录随机码缓存
     await this.redisSrv.del(`login:${code}`);
@@ -201,9 +201,9 @@ export class UserService extends CommonService<UserEntity, UserLogEntity> {
       throw new ConflictException(`当前系统限制最大用户数为20，已关闭注册！`);
     }
     /**用户角色 */
-    const roles: string[] = count === 0 ? ['admin'] : [];
+    const roles: string[] = count === 0 ? ["admin"] : [];
     /**创建操作序号 */
-    const operateId = await this.operateSrv.create('user', 'register', 0);
+    const operateId = await this.operateSrv.create("user", "register", 0);
     /**注册时间 */
     const at = Date.now();
     /**用户数据 */
@@ -214,7 +214,7 @@ export class UserService extends CommonService<UserEntity, UserLogEntity> {
       create: { userId: 0, at } as CreateEntity,
       update: {
         userId: 0,
-        operate: 'register',
+        operate: "register",
         operateId,
         reqId,
         at,
@@ -238,7 +238,7 @@ export class UserService extends CommonService<UserEntity, UserLogEntity> {
    */
   async email(id: number, email: string) {
     /**用户 */
-    const user = await this.show(id, 'status');
+    const user = await this.show(id, "status");
     if (!user) {
       throw new NotFoundException(`当前用户不存在！`);
     }
@@ -256,14 +256,14 @@ export class UserService extends CommonService<UserEntity, UserLogEntity> {
     /**缓存信息 */
     const cache: object = { id, email };
     /**随机码消息 */
-    const code = await this.redisSrv.addCode('activate', 100, 30, cache);
+    const code = await this.redisSrv.addCode("activate", 100, 30, cache);
     /**激活链接 */
     const url = `${process.env.WEB_URL}passport/activate/${code.code}`;
     /**邮件内容 */
     const mail: Email = {
       from: `"${process.env.SMTP_USER}" <${process.env.SMTP_ACCOUNT}>`, // 发件人（显示名称可自定义）
       to: email, // 收件人邮箱
-      subject: '个人量化工具的修改邮箱验证邮件', // 邮件主题
+      subject: "个人量化工具的修改邮箱验证邮件", // 邮件主题
       html: `<p>请点击该<a href="${url}" target="_blank">新邮箱激活链接</a>。</p>
       <p>或将以下地址复制到浏览器地址栏中打开：</p>
       <p>${url}</p>`, // HTML内容（可选）
@@ -284,24 +284,24 @@ export class UserService extends CommonService<UserEntity, UserLogEntity> {
       `activate:${code}`,
     );
     if (!cache || !cache.email) {
-      throw new NotFoundException('激活地址已过期！');
+      throw new NotFoundException("激活地址已过期！");
     }
     /**用户ID */
     const id = Number(cache.id);
     /**用户 */
     const user = await this.userRepository.findOne({
       select: [
-        'id',
-        'email',
-        'status',
-        'roles',
+        "id",
+        "email",
+        "status",
+        "roles",
       ] as FindOptionsSelect<UserEntity>,
       where: {
         id,
       } as FindOptionsWhere<UserEntity>,
     });
     if (!user) {
-      throw new NotFoundException('用户还未注册！');
+      throw new NotFoundException("用户还未注册！");
     }
     /**检查结果 */
     const exists = await this.userRepository.existsBy({
@@ -311,13 +311,13 @@ export class UserService extends CommonService<UserEntity, UserLogEntity> {
       throw new ConflictException(`邮箱${cache.email}已被使用，无法修改！`);
     }
     /**创建操作序号 */
-    const operateId = await this.operateSrv.create('user', 'email', id);
+    const operateId = await this.operateSrv.create("user", "email", id);
     // 更新用户信息
     const result = await this.userRepository.update(id, {
       email: cache.email,
       update: {
         userId: id,
-        operate: 'chgemail',
+        operate: "chgemail",
         operateId,
         reqId,
         at: Date.now(),
@@ -354,19 +354,19 @@ export class UserService extends CommonService<UserEntity, UserLogEntity> {
   async index(operateId: number = -1) {
     return this.userRepository.find({
       select: [
-        'id',
-        'name',
-        'avatar',
-        'email',
-        'status',
-        'roles',
-        'create.userId',
-        'create.at',
-        'update.userId',
-        'update.at',
-        'update.operateId',
-        'update.operate',
-        'update.reqId',
+        "id",
+        "name",
+        "avatar",
+        "email",
+        "status",
+        "roles",
+        "create.userId",
+        "create.at",
+        "update.userId",
+        "update.at",
+        "update.operateId",
+        "update.operate",
+        "update.reqId",
       ] as FindOptionsSelect<UserEntity>,
       where: {
         update: {
@@ -382,53 +382,53 @@ export class UserService extends CommonService<UserEntity, UserLogEntity> {
    * @param type 数据结果类型
    * @returns 用户详情
    */
-  async show(id: number, type: 'startup' | 'status' | 'login' | 'all' = 'all') {
+  async show(id: number, type: "startup" | "status" | "login" | "all" = "all") {
     /**返回字段 */
     let select: FindOptionsSelect<UserEntity>;
-    if (type === 'startup') {
+    if (type === "startup") {
       select = [
-        'id',
-        'name',
-        'avatar',
-        'email',
-        'roles',
+        "id",
+        "name",
+        "avatar",
+        "email",
+        "roles",
       ] as FindOptionsSelect<UserEntity>;
-    } else if (type === 'status') {
+    } else if (type === "status") {
       select = [
-        'id',
-        'email',
-        'status',
-        'roles',
+        "id",
+        "email",
+        "status",
+        "roles",
       ] as FindOptionsSelect<UserEntity>;
-    } else if (type === 'login') {
+    } else if (type === "login") {
       select = [
-        'id',
-        'email',
-        'status',
-        'roles',
-        'loginTimes',
-        'firstLoginAt',
+        "id",
+        "email",
+        "status",
+        "roles",
+        "loginTimes",
+        "firstLoginAt",
       ] as FindOptionsSelect<UserEntity>;
     } else {
       select = [
-        'id',
-        'name',
-        'avatar',
-        'email',
-        'status',
-        'roles',
-        'loginTimes',
-        'firstLoginAt',
-        'lastLoginIp',
-        'lastLoginAt',
-        'lastSessionAt',
-        'create.userId',
-        'create.at',
-        'update.userId',
-        'update.at',
-        'update.operateId',
-        'update.operate',
-        'update.reqId',
+        "id",
+        "name",
+        "avatar",
+        "email",
+        "status",
+        "roles",
+        "loginTimes",
+        "firstLoginAt",
+        "lastLoginIp",
+        "lastLoginAt",
+        "lastSessionAt",
+        "create.userId",
+        "create.at",
+        "update.userId",
+        "update.at",
+        "update.operateId",
+        "update.operate",
+        "update.reqId",
       ] as FindOptionsSelect<UserEntity>;
     }
     return this.userRepository.findOne({

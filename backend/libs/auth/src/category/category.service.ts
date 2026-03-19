@@ -1,10 +1,10 @@
 // 外部依赖
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
 // 内部依赖
-import { OperateService, OptionService, QueueService } from '@shared';
-import { CategoryEntity, CategoryLogEntity } from '..';
+import { OperateService, OptionService, QueueService } from "@shared";
+import { CategoryEntity, CategoryLogEntity } from "..";
 
 /**分组服务 */
 @Injectable()
@@ -28,8 +28,8 @@ export class CategoryService extends OptionService<
     protected readonly categoryLogRepository: Repository<CategoryLogEntity>,
   ) {
     super(
-      'id',
-      'category',
+      "id",
+      "category",
       operateSrv,
       queueSrv,
       categoryRepository,

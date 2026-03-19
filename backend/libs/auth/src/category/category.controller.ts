@@ -1,11 +1,11 @@
 // 外部依赖
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller, Get, Query } from "@nestjs/common";
 // 内部依赖
-import { OperatePipe } from '@shared';
-import { CategoryService } from '..';
+import { OperatePipe } from "@shared";
+import { CategoryService } from "..";
 
 /**分组控制器 */
-@Controller('category')
+@Controller("category")
 export class CategoryController {
   constructor(private readonly categorySrv: CategoryService) {}
 
@@ -15,7 +15,7 @@ export class CategoryController {
    * @returns 对象清单
    */
   @Get()
-  index(@Query('operateId', OperatePipe) operateId: number) {
+  index(@Query("operateId", OperatePipe) operateId: number) {
     return this.categorySrv.index(operateId);
   }
 }

@@ -4,12 +4,12 @@ import {
   NotFoundException,
   ForbiddenException,
   Injectable,
-} from '@nestjs/common';
-import { HttpService } from '@nestjs/axios';
-import { createHmac, createHash } from 'crypto';
+} from "@nestjs/common";
+import { HttpService } from "@nestjs/axios";
+import { createHmac, createHash } from "crypto";
 // 内部依赖
-import { KeyService } from '@cloud';
-import { Config } from '..';
+import { KeyService } from "@cloud";
+import { Config } from "..";
 
 @Injectable()
 export class ApiService {
@@ -28,12 +28,12 @@ export class ApiService {
     }
     const config: Config = {
       id: 1,
-      host: 'ssl.tencentcloudapi.com',
-      service: 'ssl',
-      region: '',
-      action: 'DescribeCertificateDetail',
-      version: '2019-12-05',
-      params: { CertificateId: 'Slv1S6aB' },
+      host: "ssl.tencentcloudapi.com",
+      service: "ssl",
+      region: "",
+      action: "DescribeCertificateDetail",
+      version: "2019-12-05",
+      params: { CertificateId: "Slv1S6aB" },
     };
   }
 
@@ -51,84 +51,84 @@ export class ApiService {
     const version = config.version;
     const now = Date.now();
     const timestamp = Math.floor(now / 1000);
-    console.debug('时间戳', timestamp, now);
+    console.debug("时间戳", timestamp, now);
     const date = new Date(now).toISOString().substring(0, 10);
     const payload = JSON.stringify(config.params);
-    const signedHeaders = 'content-type;host';
-    const hashedRequestPayload = createHash('sha256')
+    const signedHeaders = "content-type;host";
+    const hashedRequestPayload = createHash("sha256")
       .update(payload)
-      .digest('hex');
-    const httpRequestMethod = 'POST';
-    const canonicalUri = '/';
-    const canonicalQueryString = '';
+      .digest("hex");
+    const httpRequestMethod = "POST";
+    const canonicalUri = "/";
+    const canonicalQueryString = "";
     const canonicalHeaders =
-      'content-type:application/json; charset=utf-8\n' + 'host:' + host + '\n';
+      "content-type:application/json; charset=utf-8\n" + "host:" + host + "\n";
     const canonicalRequest =
       httpRequestMethod +
-      '\n' +
+      "\n" +
       canonicalUri +
-      '\n' +
+      "\n" +
       canonicalQueryString +
-      '\n' +
+      "\n" +
       canonicalHeaders +
-      '\n' +
+      "\n" +
       signedHeaders +
-      '\n' +
+      "\n" +
       hashedRequestPayload;
-    console.debug('规范请求串', canonicalRequest);
-    const algorithm = 'TC3-HMAC-SHA256';
-    const hashedCanonicalRequest = createHash('sha256')
+    console.debug("规范请求串", canonicalRequest);
+    const algorithm = "TC3-HMAC-SHA256";
+    const hashedCanonicalRequest = createHash("sha256")
       .update(canonicalRequest)
-      .digest('hex');
-    const credentialScope = date + '/' + service + '/' + 'tc3_request';
+      .digest("hex");
+    const credentialScope = date + "/" + service + "/" + "tc3_request";
     const stringToSign =
       algorithm +
-      '\n' +
+      "\n" +
       timestamp +
-      '\n' +
+      "\n" +
       credentialScope +
-      '\n' +
+      "\n" +
       hashedCanonicalRequest;
-    console.debug('待签名字符串', stringToSign);
-    const kDate = createHmac('sha256', 'TC3' + SECRET_KEY)
+    console.debug("待签名字符串", stringToSign);
+    const kDate = createHmac("sha256", "TC3" + SECRET_KEY)
       .update(date)
       .digest();
-    const kService = createHmac('sha256', kDate).update(service).digest();
-    const kSigning = createHmac('sha256', kService)
-      .update('tc3_request')
+    const kService = createHmac("sha256", kDate).update(service).digest();
+    const kSigning = createHmac("sha256", kService)
+      .update("tc3_request")
       .digest();
-    const signature = createHmac('sha256', kSigning)
+    const signature = createHmac("sha256", kSigning)
       .update(stringToSign)
-      .digest('hex');
-    console.debug('签名', signature, typeof signature);
+      .digest("hex");
+    console.debug("签名", signature, typeof signature);
     const authorization =
       algorithm +
-      ' ' +
-      'Credential=' +
+      " " +
+      "Credential=" +
       SECRET_ID +
-      '/' +
+      "/" +
       credentialScope +
-      ', ' +
-      'SignedHeaders=' +
+      ", " +
+      "SignedHeaders=" +
       signedHeaders +
-      ', ' +
-      'Signature=' +
+      ", " +
+      "Signature=" +
       signature;
-    console.debug('Authorization', authorization);
+    console.debug("Authorization", authorization);
     const headers = {
       Authorization: authorization,
-      'Content-Type': 'application/json; charset=utf-8',
+      "Content-Type": "application/json; charset=utf-8",
       Host: host,
-      'X-TC-Action': action,
-      'X-TC-Timestamp': timestamp,
-      'X-TC-Version': version,
+      "X-TC-Action": action,
+      "X-TC-Timestamp": timestamp,
+      "X-TC-Version": version,
     };
     if (region) {
-      headers['X-TC-Region'] = region;
+      headers["X-TC-Region"] = region;
     }
 
-    console.debug('headers', headers);
-    console.debug('payload', payload);
+    console.debug("headers", headers);
+    console.debug("payload", payload);
 
     const result = await this.httpSrv.axiosRef.request({
       url: `https://${host}`,
@@ -137,7 +137,7 @@ export class ApiService {
       data: payload,
     });
 
-    console.debug('data', result.data);
+    console.debug("data", result.data);
     return result;
   }
 }

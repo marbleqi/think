@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 // 外部依赖
-import { Injectable, HttpException } from '@nestjs/common';
-import { HttpService } from '@nestjs/axios';
+import { Injectable, HttpException } from "@nestjs/common";
+import { HttpService } from "@nestjs/axios";
 // 内部依赖
-import { KongObject, KongObjectResponse } from './object.types';
+import { KongObject, KongObjectResponse } from "./object.types";
 
 @Injectable()
 export class ObjectService {

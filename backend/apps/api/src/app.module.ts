@@ -10,7 +10,7 @@ import { AuthModule, TokenGuard } from "@auth";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { DefaultModule } from "./default/default.module";
-import { ChatModule } from "./chat";
+import { ChatModule } from "@chat";
 
 @Module({
   imports: [

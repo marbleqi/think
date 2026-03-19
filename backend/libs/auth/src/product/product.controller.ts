@@ -1,11 +1,11 @@
 // 外部依赖
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller, Get, Query } from "@nestjs/common";
 // 内部依赖
-import { OperatePipe } from '@shared';
-import { ProductService } from '..';
+import { OperatePipe } from "@shared";
+import { ProductService } from "..";
 
 /**产品控制器 */
-@Controller('product')
+@Controller("product")
 export class ProductController {
   constructor(private readonly productSrv: ProductService) {}
 
@@ -15,7 +15,7 @@ export class ProductController {
    * @returns 对象清单
    */
   @Get()
-  index(@Query('operateId', OperatePipe) operateId: number) {
+  index(@Query("operateId", OperatePipe) operateId: number) {
     return this.productSrv.index(operateId);
   }
 }

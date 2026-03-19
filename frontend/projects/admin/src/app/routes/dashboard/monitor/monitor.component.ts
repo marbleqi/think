@@ -7,7 +7,7 @@ import { G2PieModule } from '@delon/chart/pie';
 import { G2TagCloudModule } from '@delon/chart/tag-cloud';
 import { G2WaterWaveModule } from '@delon/chart/water-wave';
 import { _HttpClient } from '@delon/theme';
-import { SHARED_IMPORTS } from '@shared';
+import { SHARED_IMPORTS } from 'shared';
 import type { CountdownConfig } from 'ngx-countdown';
 import { zip } from 'rxjs';
 

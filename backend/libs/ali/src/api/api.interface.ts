@@ -3,7 +3,7 @@ export interface Config {
   /**密钥ID */
   id: number;
   /**请求方法 */
-  method: 'GET' | 'POST';
+  method: "GET" | "POST";
   /**服务地址 */
   endpoint: string;
   /**API名称 */

@@ -1,5 +1,5 @@
 // 外部依赖
-import { Request } from 'express';
+import { Request } from "express";
 
 /**用户负载信息 */
 export interface UserPayload {
@@ -9,7 +9,7 @@ export interface UserPayload {
   [key: string]: unknown;
 }
 
-declare module 'express' {
+declare module "express" {
   interface Request {
     /**用户信息 */
     user?: unknown;

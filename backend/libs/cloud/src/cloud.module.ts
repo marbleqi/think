@@ -1,9 +1,9 @@
 // 外部依赖
-import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { Module } from "@nestjs/common";
+import { TypeOrmModule } from "@nestjs/typeorm";
 // 内部依赖
-import { SharedModule } from '@shared';
-import { KeyEntity, KeyLogEntity, KeyService } from './key';
+import { SharedModule } from "@shared";
+import { KeyEntity, KeyLogEntity, KeyService } from "./key";
 
 /**云服务模块 */
 @Module({

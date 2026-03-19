@@ -1,9 +1,9 @@
 // 外部依赖
-import { Module } from '@nestjs/common';
+import { Module } from "@nestjs/common";
 // 内部依赖
-import { SharedModule } from '@shared';
-import { AuthModule } from '@auth';
-import { AccountGateway, AccountController, UserController } from '@default';
+import { SharedModule } from "@shared";
+import { AuthModule } from "@auth";
+import { AccountGateway, AccountController, UserController } from "@default";
 
 @Module({
   imports: [SharedModule, AuthModule],

@@ -1,9 +1,9 @@
 // 外部依赖
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, FindOptionsWhere } from 'typeorm';
+import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository, FindOptionsWhere } from "typeorm";
 // 内部依赖
-import { ShortcutEntity } from '..';
+import { ShortcutEntity } from "..";
 
 /**快捷方式服务 */
 @Injectable()
@@ -38,7 +38,7 @@ export class ShortcutService {
       await this.shortcutRepository.save(value);
       return 1;
     } catch {
-      console.debug('更新快捷方式失败');
+      console.debug("更新快捷方式失败");
       return 0;
     }
   }

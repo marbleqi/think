@@ -7,14 +7,14 @@ import {
   Headers,
   Body,
   ParseIntPipe,
-} from '@nestjs/common';
+} from "@nestjs/common";
 // 内部依赖
-import { ReqId } from '@shared';
-import { UserUpdateDto, UserService, TokenService } from '@auth';
-import { UserId } from '@auth';
+import { ReqId } from "@shared";
+import { UserUpdateDto, UserService, TokenService } from "@auth";
+import { UserId } from "@auth";
 
 /**已登录用户控制器 */
-@Controller('user')
+@Controller("user")
 export class UserController {
   /**
    * 构造函数
@@ -31,9 +31,9 @@ export class UserController {
    * @param req 请求上下文
    * @returns 用户信息
    */
-  @Get('startup')
+  @Get("startup")
   async startup(@UserId() userId: number) {
-    return this.userSrv.show(userId, 'startup');
+    return this.userSrv.show(userId, "startup");
   }
 
   /**
@@ -41,10 +41,10 @@ export class UserController {
    * @param req 请求上下文
    * @returns 新令牌
    */
-  @Post('refresh')
+  @Post("refresh")
   refresh(
-    @Headers('token') token: string,
-    @Body('valid', ParseIntPipe) valid: number,
+    @Headers("token") token: string,
+    @Body("valid", ParseIntPipe) valid: number,
     @UserId() userId: number,
   ) {
     return this.tokenSrv.refresh(userId, token, valid);
@@ -55,7 +55,7 @@ export class UserController {
    * @param req 请求上下文
    * @returns 新令牌
    */
-  @Get('show')
+  @Get("show")
   async show(@UserId() userId: number) {
     return this.userSrv.show(userId);
   }
@@ -66,7 +66,7 @@ export class UserController {
    * @param req 请求上下文
    * @returns 用户ID
    */
-  @Post('update')
+  @Post("update")
   update(
     @Body() body: UserUpdateDto,
     @UserId() userId: number,
@@ -81,8 +81,8 @@ export class UserController {
    * @param req 请求上下文
    * @returns 用户ID
    */
-  @Post('email')
-  email(@Body('email') email: string, @UserId() userId: number) {
+  @Post("email")
+  email(@Body("email") email: string, @UserId() userId: number) {
     return this.userSrv.email(userId, email);
   }
 
@@ -91,8 +91,8 @@ export class UserController {
    * @param token 待作废的令牌
    * @returns 作废令牌数
    */
-  @Delete('logout')
-  destroy(@Headers('token') token: string) {
+  @Delete("logout")
+  destroy(@Headers("token") token: string) {
     return this.tokenSrv.destroy(token);
   }
 }

@@ -2,8 +2,8 @@
 import {
   NotFoundException,
   UnprocessableEntityException,
-} from '@nestjs/common';
-import { Repository, ObjectLiteral, FindOptionsWhere, MoreThan } from 'typeorm';
+} from "@nestjs/common";
+import { Repository, ObjectLiteral, FindOptionsWhere, MoreThan } from "typeorm";
 // 内部依赖
 import {
   CreateEntity,
@@ -11,7 +11,7 @@ import {
   LogEntity,
   OperateService,
   QueueService,
-} from '@shared';
+} from "@shared";
 
 /**通用对象实体 */
 export type CommonEntity = ObjectLiteral & {
@@ -135,14 +135,14 @@ export abstract class CommonService<
    */
   async create(value: Partial<Entity>, userId: number = 0, reqId: number = 0) {
     /**创建操作序号 */
-    const operateId = await this.operateSrv.create(this.name, 'create', userId);
+    const operateId = await this.operateSrv.create(this.name, "create", userId);
 
     /**创建对象结果 */
     const result = await this.commonRepository.insert({
       ...value,
       id: undefined,
       create: { userId, at: Date.now() },
-      update: { userId, operate: 'create', operateId, reqId, at: Date.now() },
+      update: { userId, operate: "create", operateId, reqId, at: Date.now() },
     });
     if (result.identifiers.length) {
       // 追加日志
@@ -175,12 +175,12 @@ export abstract class CommonService<
     }
 
     /**创建操作序号 */
-    const operateId = await this.operateSrv.create(this.name, 'update', userId);
+    const operateId = await this.operateSrv.create(this.name, "update", userId);
 
     /**更新对象结果 */
     const result = await this.commonRepository.update(id, {
       ...value,
-      update: { userId, operate: 'update', operateId, reqId, at: Date.now() },
+      update: { userId, operate: "update", operateId, reqId, at: Date.now() },
     });
     if (result.affected) {
       // 追加日志

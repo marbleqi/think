@@ -8,13 +8,13 @@ import {
   Body,
   ParseIntPipe,
   Req,
-} from '@nestjs/common';
+} from "@nestjs/common";
 // 内部依赖
-import type { AppRequest } from '@shared';
-import { UserUpdateDto, UserService, TokenService } from '@auth';
+import type { AppRequest } from "@shared";
+import { UserUpdateDto, UserService, TokenService } from "@auth";
 
 /**已登录用户控制器 */
-@Controller('user')
+@Controller("user")
 export class UserController {
   /**
    * 构造函数
@@ -31,9 +31,9 @@ export class UserController {
    * @param req 请求上下文
    * @returns 用户信息
    */
-  @Get('startup')
+  @Get("startup")
   async startup(@Req() req: AppRequest) {
-    const user = await this.userSrv.show(Number(req.user?.id), 'startup');
+    const user = await this.userSrv.show(Number(req.user?.id), "startup");
     return user;
   }
 
@@ -42,10 +42,10 @@ export class UserController {
    * @param req 请求上下文
    * @returns 新令牌
    */
-  @Post('refresh')
+  @Post("refresh")
   refresh(
-    @Headers('token') token: string,
-    @Body('valid', ParseIntPipe) valid: number,
+    @Headers("token") token: string,
+    @Body("valid", ParseIntPipe) valid: number,
     @Req() req: AppRequest,
   ) {
     return this.tokenSrv.refresh(Number(req.user?.id), token, valid);
@@ -56,7 +56,7 @@ export class UserController {
    * @param req 请求上下文
    * @returns 新令牌
    */
-  @Get('show')
+  @Get("show")
   async show(@Req() req: AppRequest) {
     const user = await this.userSrv.show(Number(req.user?.id));
     return user;
@@ -68,7 +68,7 @@ export class UserController {
    * @param req 请求上下文
    * @returns 用户ID
    */
-  @Post('update')
+  @Post("update")
   update(@Body() body: UserUpdateDto, @Req() req: AppRequest) {
     return this.userSrv.update(Number(req.user?.id), body, Number(req.reqId));
   }
@@ -79,8 +79,8 @@ export class UserController {
    * @param req 请求上下文
    * @returns 用户ID
    */
-  @Post('email')
-  email(@Body('email') email: string, @Req() req: AppRequest) {
+  @Post("email")
+  email(@Body("email") email: string, @Req() req: AppRequest) {
     return this.userSrv.email(Number(req.user?.id), email);
   }
 
@@ -89,8 +89,8 @@ export class UserController {
    * @param token 待作废的令牌
    * @returns 作废令牌数
    */
-  @Delete('logout')
-  destroy(@Headers('token') token: string) {
+  @Delete("logout")
+  destroy(@Headers("token") token: string) {
     return this.tokenSrv.destroy(token);
   }
 }

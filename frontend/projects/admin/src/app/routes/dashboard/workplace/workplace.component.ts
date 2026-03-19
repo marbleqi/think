@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { G2RadarModule } from '@delon/chart/radar';
 import { _HttpClient } from '@delon/theme';
-import { SHARED_IMPORTS } from '@shared';
+import { SHARED_IMPORTS } from 'shared';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { zip } from 'rxjs';

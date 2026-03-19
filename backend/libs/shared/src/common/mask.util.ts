@@ -1,20 +1,20 @@
 /**敏感字段名称列表 */
 const SENSITIVE_FIELDS = [
-  'password',
-  'pwd',
-  'secret',
-  'token',
-  'accessToken',
-  'refreshToken',
-  'authorization',
-  'auth',
-  'key',
-  'privateKey',
-  'creditCard',
-  'ssn',
-  'phone',
-  'mobile',
-  'email',
+  "password",
+  "pwd",
+  "secret",
+  "token",
+  "accessToken",
+  "refreshToken",
+  "authorization",
+  "auth",
+  "key",
+  "privateKey",
+  "creditCard",
+  "ssn",
+  "phone",
+  "mobile",
+  "email",
 ];
 
 /**掩码替换模式列表 */
@@ -36,7 +36,7 @@ const MASK_PATTERNS = [
  * @returns 是否为对象
  */
 function isObject(value: unknown): value is Record<string, unknown> {
-  return value !== null && typeof value === 'object' && !Array.isArray(value);
+  return value !== null && typeof value === "object" && !Array.isArray(value);
 }
 
 /**
@@ -46,12 +46,12 @@ function isObject(value: unknown): value is Record<string, unknown> {
  */
 function maskSensitiveField(value: string): string {
   if (value.length <= 2) {
-    return '***';
+    return "***";
   }
   if (value.length <= 6) {
-    return value[0] + '*'.repeat(value.length - 2) + value[value.length - 1];
+    return value[0] + "*".repeat(value.length - 2) + value[value.length - 1];
   }
-  return value.slice(0, 2) + '*'.repeat(value.length - 4) + value.slice(-2);
+  return value.slice(0, 2) + "*".repeat(value.length - 4) + value.slice(-2);
 }
 
 /**
@@ -64,7 +64,7 @@ export function maskData(data: unknown): unknown {
     return data;
   }
 
-  if (typeof data === 'string') {
+  if (typeof data === "string") {
     let result = data;
     for (const { pattern, replace } of MASK_PATTERNS) {
       result = result.replace(pattern, replace);
@@ -83,10 +83,10 @@ export function maskData(data: unknown): unknown {
       if (
         SENSITIVE_FIELDS.some((field) => lowerKey.includes(field.toLowerCase()))
       ) {
-        if (typeof value === 'string') {
+        if (typeof value === "string") {
           masked[key] = maskSensitiveField(value);
         } else if (value !== null && value !== undefined) {
-          masked[key] = '***';
+          masked[key] = "***";
         } else {
           masked[key] = value;
         }

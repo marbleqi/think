@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 // 外部依赖
-import { Injectable, HttpException, NotFoundException } from '@nestjs/common';
-import { HttpService } from '@nestjs/axios';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Injectable, HttpException, NotFoundException } from "@nestjs/common";
+import { HttpService } from "@nestjs/axios";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
 // 内部依赖
-import { OperateService, CommonService, QueueService } from '@shared';
-import { KongEntity, KongLogEntity } from '.';
+import { OperateService, CommonService, QueueService } from "@shared";
+import { KongEntity, KongLogEntity } from ".";
 
 @Injectable()
 export class KongService extends CommonService<KongEntity, KongLogEntity> {
@@ -28,13 +28,13 @@ export class KongService extends CommonService<KongEntity, KongLogEntity> {
     @InjectRepository(KongLogEntity)
     private readonly kongLogRepository: Repository<KongLogEntity>,
   ) {
-    super('kong', operateSrv, queueSrv, kongRepository, kongLogRepository);
+    super("kong", operateSrv, queueSrv, kongRepository, kongLogRepository);
   }
 
   async url(id: number) {
     const kong = await this.show(id);
     if (!kong) {
-      throw new NotFoundException('指定网关不存在！');
+      throw new NotFoundException("指定网关不存在！");
     }
     return kong.url;
   }
@@ -42,7 +42,7 @@ export class KongService extends CommonService<KongEntity, KongLogEntity> {
   async report(id: number) {
     const kong = await this.show(id);
     if (!kong) {
-      throw new NotFoundException('指定网关不存在！');
+      throw new NotFoundException("指定网关不存在！");
     }
     const url = kong.url;
     const result = await this.httpSrv.axiosRef.get(
@@ -57,7 +57,7 @@ export class KongService extends CommonService<KongEntity, KongLogEntity> {
   async plugin(id: number) {
     const kong = await this.show(id);
     if (!kong) {
-      throw new NotFoundException('指定网关不存在！');
+      throw new NotFoundException("指定网关不存在！");
     }
     const url = kong.url;
     const result = await this.httpSrv.axiosRef.get(`${url}/plugins/enabled`);

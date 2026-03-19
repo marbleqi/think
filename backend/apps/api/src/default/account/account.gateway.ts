@@ -6,14 +6,14 @@ import {
   OnGatewayInit,
   OnGatewayConnection,
   OnGatewayDisconnect,
-} from '@nestjs/websockets';
-import { Socket, Namespace } from 'socket.io';
+} from "@nestjs/websockets";
+import { Socket, Namespace } from "socket.io";
 
 // 内部依赖
-import { UserService } from '@auth';
+import { UserService } from "@auth";
 
 /**登录授权网关 */
-@WebSocketGateway({ namespace: 'account', cors: { origin: true } })
+@WebSocketGateway({ namespace: "account", cors: { origin: true } })
 export class AccountGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
 {
@@ -25,11 +25,11 @@ export class AccountGateway
    */
   afterInit(namespace: Namespace) {
     this.userSrv.result.subscribe(async (data) => {
-      console.debug('收到订阅消息', data);
+      console.debug("收到订阅消息", data);
       const id = Number(data.id);
       const valid = Number(data.valid);
       const token = await this.userSrv.token(id, valid);
-      namespace.to(data.room).emit('token', token);
+      namespace.to(data.room).emit("token", token);
     });
   }
 
@@ -38,7 +38,7 @@ export class AccountGateway
    * @param client 客户端对象
    */
   handleConnection(client: Socket, ...args: any[]) {
-    console.debug('有请求接入', client.id, args);
+    console.debug("有请求接入", client.id, args);
   }
 
   /**
@@ -46,7 +46,7 @@ export class AccountGateway
    * @param client 客户端对象
    */
   handleDisconnect(client: Socket) {
-    console.debug('有请求断开', client.id);
+    console.debug("有请求断开", client.id);
   }
 
   /**
@@ -54,11 +54,11 @@ export class AccountGateway
    * @param client 客户端对象
    * @param payload 消息负载
    */
-  @SubscribeMessage('login')
+  @SubscribeMessage("login")
   async handleMessage(client: Socket, email: string) {
-    console.debug('收到登录消息：', client.id, email);
+    console.debug("收到登录消息：", client.id, email);
     // 发送授权邮件
     const result = await this.userSrv.send(email, client.id);
-    client.emit('email', result);
+    client.emit("email", result);
   }
 }

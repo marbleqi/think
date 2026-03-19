@@ -1,9 +1,9 @@
 // 外部依赖
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, SelectQueryBuilder } from 'typeorm';
+import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository, SelectQueryBuilder } from "typeorm";
 // 内部依赖
-import { ReqCreate, ReqUpdate, ReqDto, ReqEntity } from '@shared';
+import { ReqCreate, ReqUpdate, ReqDto, ReqEntity } from "@shared";
 
 /**请求日志服务 */
 @Injectable()
@@ -46,8 +46,8 @@ export class ReqService {
   async url() {
     /**返回的模块记录 */
     return this.reqRepository
-      .createQueryBuilder('req')
-      .select('DISTINCT req.url', 'url')
+      .createQueryBuilder("req")
+      .select("DISTINCT req.url", "url")
       .getRawMany();
   }
 
@@ -58,8 +58,8 @@ export class ReqService {
   async controller() {
     /**返回的控制器记录 */
     return this.reqRepository
-      .createQueryBuilder('req')
-      .select('DISTINCT req.controller', 'controller')
+      .createQueryBuilder("req")
+      .select("DISTINCT req.controller", "controller")
       .getRawMany();
   }
 
@@ -70,9 +70,9 @@ export class ReqService {
    */
   async action(controller: string) {
     return this.reqRepository
-      .createQueryBuilder('req')
-      .select('DISTINCT req.action', 'action')
-      .where('req.controller = :controller', { controller })
+      .createQueryBuilder("req")
+      .select("DISTINCT req.action", "action")
+      .where("req.controller = :controller", { controller })
       .getRawMany();
   }
 
@@ -87,59 +87,59 @@ export class ReqService {
       reqId = 0;
     }
     let query: SelectQueryBuilder<ReqEntity> = this.reqRepository
-      .createQueryBuilder('req')
+      .createQueryBuilder("req")
       .select([
-        'req.reqId',
-        'req.userId',
-        'req.url',
-        'req.controller',
-        'req.action',
-        'req.status',
-        'req.clientIp',
-        'req.serverIp',
-        'req.startAt',
-        'req.endAt',
+        "req.reqId",
+        "req.userId",
+        "req.url",
+        "req.controller",
+        "req.action",
+        "req.status",
+        "req.clientIp",
+        "req.serverIp",
+        "req.startAt",
+        "req.endAt",
       ])
-      .where('req.req_id != :reqId', { reqId });
+      .where("req.req_id != :reqId", { reqId });
     // 搜索条件增加用户ID
     if (value.userId && Number(value.userId)) {
-      query = query.andWhere('req.user_id = :userId', {
+      query = query.andWhere("req.user_id = :userId", {
         userId: Number(value.userId),
       });
     }
     // 搜索条件增加模块
     if (value.url) {
-      query = query.andWhere('req.url = :url', {
+      query = query.andWhere("req.url = :url", {
         url: value.url,
       });
     }
     // 搜索条件增加控制器
     if (value.controller) {
-      query = query.andWhere('req.controller = :controller', {
+      query = query.andWhere("req.controller = :controller", {
         controller: value.controller,
       });
     }
     // 搜索条件增加方法
     if (value.action) {
-      query = query.andWhere('req.action = :action', {
+      query = query.andWhere("req.action = :action", {
         action: value.action,
       });
     }
     // 搜索条件增加状态码
     if (value.status === 200) {
-      query = query.andWhere('req.status = 200');
+      query = query.andWhere("req.status = 200");
     } else {
-      query = query.andWhere('req.status != 200');
+      query = query.andWhere("req.status != 200");
     }
     // 搜索条件请求时间
     if (value.startAt) {
-      query = query.andWhere('req.start_at >= :startAt', {
+      query = query.andWhere("req.start_at >= :startAt", {
         startAt: Number(value.startAt),
       });
     }
     // 搜索条件响应时间
     if (value.endAt) {
-      query = query.andWhere('req.end_at <= :endAt', {
+      query = query.andWhere("req.end_at <= :endAt", {
         endAt: Number(value.endAt),
       });
     }

@@ -1,8 +1,8 @@
 // 外部依赖
-import { Injectable } from '@nestjs/common';
-import { Redis, RedisOptions } from 'ioredis';
+import { Injectable } from "@nestjs/common";
+import { Redis, RedisOptions } from "ioredis";
 // 内部依赖
-import { random } from '@shared';
+import { random } from "@shared";
 
 /**随机码缓存记录 */
 export interface Code {
@@ -32,7 +32,7 @@ export class RedisService extends Redis {
   constructor() {
     // 进行配置参数验证
     if (!process.env.REDIS_HOST) {
-      throw new Error('未配置缓存地址');
+      throw new Error("未配置缓存地址");
     }
     /**缓存地址 */
     const host = process.env.REDIS_HOST;
@@ -43,10 +43,10 @@ export class RedisService extends Redis {
     /**缓存数据库 */
     const db = 0;
     /**缓存密码 */
-    const password = process.env.REDIS_PSW || '';
+    const password = process.env.REDIS_PSW || "";
     /**缓存配置 */
     const options = { host, port, db, password } as RedisOptions;
-    console.debug('应用缓存已连接');
+    console.debug("应用缓存已连接");
     super(options);
   }
 

@@ -1,11 +1,11 @@
 // 外部依赖
-import { Controller } from '@nestjs/common';
+import { Controller } from "@nestjs/common";
 // 内部依赖
-import { Allow, ProductService, OptionController } from '@auth';
-import { ProductUpdateDto } from '..';
+import { Allow, ProductService, OptionController } from "@auth";
+import { ProductUpdateDto } from "..";
 
-@Controller('admin/product')
-@Allow('admin')
+@Controller("admin/product")
+@Allow("admin")
 export class ProductController extends OptionController<
   ProductService,
   ProductUpdateDto

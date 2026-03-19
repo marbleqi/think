@@ -8,15 +8,15 @@ import {
   Param,
   Body,
   ParseIntPipe,
-} from '@nestjs/common';
-import type { Request } from 'express';
+} from "@nestjs/common";
+import type { Request } from "express";
 // 内部依赖
-import type { CommonEntity, CommonEntityLog } from '@shared';
-import { CommonService, OperatePipe, ReqId } from '@shared';
-import { UserId } from '@auth';
+import type { CommonEntity, CommonEntityLog } from "@shared";
+import { CommonService, OperatePipe, ReqId } from "@shared";
+import { UserId } from "@auth";
 
 /**授权角色装饰器 */
-export const Allow = (role: string) => SetMetadata('role', role);
+export const Allow = (role: string) => SetMetadata("role", role);
 
 /**
  * 通用对象控制器
@@ -40,8 +40,8 @@ export abstract class CommonController<
    * @param operateId 操作序号，用于获取增量数据
    * @returns 对象清单
    */
-  @Get('index')
-  index(@Query('operateId', OperatePipe) operateId: number) {
+  @Get("index")
+  index(@Query("operateId", OperatePipe) operateId: number) {
     return this.commonSrv.index(operateId);
   }
 
@@ -49,7 +49,7 @@ export abstract class CommonController<
    * 获取对象记录数
    * @returns 记录数
    */
-  @Get('count')
+  @Get("count")
   count() {
     return this.commonSrv.count();
   }
@@ -59,8 +59,8 @@ export abstract class CommonController<
    * @param id 对象ID
    * @returns 对象详情
    */
-  @Get('show/:id')
-  async show(@Param('id', ParseIntPipe) id: number) {
+  @Get("show/:id")
+  async show(@Param("id", ParseIntPipe) id: number) {
     const common = await this.commonSrv.show(id);
     if (common === null) {
       throw new NotFoundException(`当前对象不存在！`);
@@ -73,8 +73,8 @@ export abstract class CommonController<
    * @param id 对象ID
    * @returns 对象变更记录
    */
-  @Get('log/:id')
-  log(@Param('id', ParseIntPipe) id: number) {
+  @Get("log/:id")
+  log(@Param("id", ParseIntPipe) id: number) {
     return this.commonSrv.log(id);
   }
 
@@ -84,7 +84,7 @@ export abstract class CommonController<
    * @param req 请求对象
    * @returns 新对象主键ID，如果创建失败则返回0
    */
-  @Post('create')
+  @Post("create")
   async create(
     @Body() value: CreateDto,
     @UserId() userId: number,
@@ -100,9 +100,9 @@ export abstract class CommonController<
    * @param req 请求对象
    * @returns 对象ID
    */
-  @Post('update/:id')
+  @Post("update/:id")
   async update(
-    @Param('id', ParseIntPipe) id: number,
+    @Param("id", ParseIntPipe) id: number,
     @Body() value: UpdateDto,
     @UserId() userId: number,
     @ReqId() reqId: number,

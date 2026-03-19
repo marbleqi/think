@@ -1,6 +1,6 @@
 // 外部依赖
-import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { Module } from "@nestjs/common";
+import { TypeOrmModule } from "@nestjs/typeorm";
 // 内部依赖
 import {
   OperateEntity,
@@ -13,7 +13,7 @@ import {
   ReqService,
   SettingService,
   QueueService,
-} from '@shared';
+} from "@shared";
 
 @Module({
   imports: [

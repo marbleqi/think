@@ -1,7 +1,7 @@
 // 外部依赖
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
 // 内部依赖
 import {
   SettingEntity,
@@ -9,7 +9,7 @@ import {
   OperateService,
   OptionService,
   QueueService,
-} from '@shared';
+} from "@shared";
 
 /**配置服务 */
 @Injectable()
@@ -33,8 +33,8 @@ export class SettingService extends OptionService<
     protected readonly settingLogRepository: Repository<SettingLogEntity>,
   ) {
     super(
-      'code',
-      'setting',
+      "code",
+      "setting",
       operateSrv,
       queueSrv,
       settingRepository,

@@ -1,8 +1,8 @@
 // 外部依赖
-import { Module } from '@nestjs/common';
+import { Module } from "@nestjs/common";
 // 内部依赖
-import { ExecutorController } from './executor.controller';
-import { ExecutorService } from './executor.service';
+import { ExecutorController } from "./executor.controller";
+import { ExecutorService } from "./executor.service";
 
 @Module({
   imports: [],

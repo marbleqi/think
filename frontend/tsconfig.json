@@ -23,7 +23,15 @@
       "@shared": ["projects/www/src/app/shared/index"],
       "@core": ["projects/www/src/app/core/index"],
       "@env/*": ["projects/www/src/environments/*"],
-      "@_mock": ["_mock/index"]
+      "@_mock": [
+        "_mock/index"
+      ],
+      "shared": [
+        "projects/shared/src/public-api"
+      ],
+      "@app/layout": [
+        "projects/layout/index"
+      ]
     }
   },
   "angularCompilerOptions": {
@@ -39,6 +47,12 @@
     },
     {
       "path": "./tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/shared/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/shared/tsconfig.spec.json"
     }
   ]
 }

@@ -1,9 +1,9 @@
 // 外部依赖
-import { NestFactory } from '@nestjs/core';
-import { json } from 'body-parser';
+import { NestFactory } from "@nestjs/core";
+import { json } from "body-parser";
 
 // 内部依赖
-import { AdminModule } from './admin.module';
+import { AdminModule } from "./admin.module";
 
 /**项目启动函数 */
 async function bootstrap() {

@@ -4,13 +4,13 @@ import {
   HttpException,
   BadRequestException,
   NotFoundException,
-} from '@nestjs/common';
-import { HttpService } from '@nestjs/axios';
-import { createHmac } from 'crypto';
+} from "@nestjs/common";
+import { HttpService } from "@nestjs/axios";
+import { createHmac } from "crypto";
 // 内部依赖
-import { random } from '@shared';
-import { KeyService } from '@cloud';
-import { Config, ApiResponse } from '..';
+import { random } from "@shared";
+import { KeyService } from "@cloud";
+import { Config, ApiResponse } from "..";
 
 @Injectable()
 export class ApiService {
@@ -31,12 +31,12 @@ export class ApiService {
     const opts = {
       Action: config.action,
       Version: config.version,
-      Format: 'JSON',
+      Format: "JSON",
       AccessKeyId,
       SignatureNonce: nonce,
       Timestamp: new Date().toISOString(),
-      SignatureMethod: 'HMAC-SHA1',
-      SignatureVersion: '1.0',
+      SignatureMethod: "HMAC-SHA1",
+      SignatureVersion: "1.0",
     };
     const sortParams = { ...opts, ...params };
     const keys = Object.keys(sortParams).sort();
@@ -44,19 +44,19 @@ export class ApiService {
       .map(
         (key) =>
           encodeURIComponent(key) +
-          '=' +
+          "=" +
           encodeURIComponent(String(sortParams[key])),
       )
-      .join('&');
+      .join("&");
     const url = `${config.endpoint}?${query}`;
     const stringToSign = `${config.method}&${encodeURIComponent(
-      '/',
+      "/",
     )}&${encodeURIComponent(query)}`;
-    console.debug('待签名字符串', stringToSign);
-    const Signature = createHmac('sha1', secret + '&')
+    console.debug("待签名字符串", stringToSign);
+    const Signature = createHmac("sha1", secret + "&")
       .update(stringToSign)
-      .digest('base64');
-    if (config.method === 'GET') {
+      .digest("base64");
+    if (config.method === "GET") {
       const result = await this.httpSrv.axiosRef.get(
         `${url}&Signature=${encodeURIComponent(Signature)}`,
         {
@@ -67,10 +67,10 @@ export class ApiService {
         return result.data as ApiResponse;
       } else {
         const data = result.data as ApiResponse;
-        throw new HttpException(data.Message || '请求失败', result.status);
+        throw new HttpException(data.Message || "请求失败", result.status);
       }
     }
-    if (config.method === 'POST') {
+    if (config.method === "POST") {
       const result = await this.httpSrv.axiosRef.post(
         `${url}&Signature=${encodeURIComponent(Signature)}`,
         params,
@@ -82,7 +82,7 @@ export class ApiService {
         return result.data as ApiResponse;
       } else {
         const data = result.data as ApiResponse;
-        throw new HttpException(data.Message || '请求失败', result.status);
+        throw new HttpException(data.Message || "请求失败", result.status);
       }
     }
     throw new BadRequestException(`请求方法错误`);

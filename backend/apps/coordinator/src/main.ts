@@ -1,7 +1,7 @@
 // 外部依赖
-import { NestFactory } from '@nestjs/core';
+import { NestFactory } from "@nestjs/core";
 // 内部依赖
-import { CoordinatorModule } from './coordinator.module';
+import { CoordinatorModule } from "./coordinator.module";
 
 async function bootstrap() {
   const app = await NestFactory.create(CoordinatorModule);

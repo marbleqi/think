@@ -1,6 +1,6 @@
 // 外部依赖
-import { UnprocessableEntityException } from '@nestjs/common';
-import { Repository, ObjectLiteral, FindOptionsWhere, MoreThan } from 'typeorm';
+import { UnprocessableEntityException } from "@nestjs/common";
+import { Repository, ObjectLiteral, FindOptionsWhere, MoreThan } from "typeorm";
 
 // 内部依赖
 import {
@@ -9,7 +9,7 @@ import {
   LogEntity,
   OperateService,
   QueueService,
-} from '@shared';
+} from "@shared";
 
 /**配置对象实体 */
 export type OptionEntity = ObjectLiteral & {
@@ -135,7 +135,7 @@ export abstract class OptionService<
       /**更新操作序号 */
       const operateId = await this.operateSrv.create(
         this.name,
-        'update',
+        "update",
         userId,
       );
       /**更新对象结果 */
@@ -147,7 +147,7 @@ export abstract class OptionService<
           ...value,
           update: {
             userId,
-            operate: 'update',
+            operate: "update",
             operateId,
             reqId,
             at: Date.now(),
@@ -168,7 +168,7 @@ export abstract class OptionService<
       /**创建操作序号 */
       const operateId = await this.operateSrv.create(
         this.name,
-        'create',
+        "create",
         userId,
       );
       /**创建对象结果 */
@@ -177,7 +177,7 @@ export abstract class OptionService<
         create: { userId, at: Date.now() },
         update: {
           userId,
-          operate: 'create',
+          operate: "create",
           operateId,
           reqId,
           at: Date.now(),

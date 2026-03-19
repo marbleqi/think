@@ -1,5 +1,5 @@
 // 外部依赖
-import { ArgumentMetadata, Injectable, PipeTransform } from '@nestjs/common';
+import { ArgumentMetadata, Injectable, PipeTransform } from "@nestjs/common";
 
 /**
  * 操作类型转换管道

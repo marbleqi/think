@@ -23,6 +23,7 @@
   "scripts": {
     "prepare": "husky install",
     "start": "ng s www -o",
+    "start:admin": "ng s admin -o",
     "hmr": "ng s www -o --hmr",
     "build": "ng b www",
     "analyze": "ng b www --source-map",
@@ -86,6 +87,7 @@
     "lint-staged": "^16.2.7",
     "ng-alain": "^21.0.5",
     "ng-alain-plugin-theme": "^18.0.0",
+    "ng-packagr": "^21.2.0",
     "prettier": "^3.8.1",
     "source-map-explorer": "^2.5.3",
     "stylelint": "^17.1.0",

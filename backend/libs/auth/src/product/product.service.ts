@@ -1,10 +1,10 @@
 // 外部依赖
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
 // 内部依赖
-import { OperateService, OptionService, QueueService } from '@shared';
-import { ProductEntity, ProductLogEntity } from '..';
+import { OperateService, OptionService, QueueService } from "@shared";
+import { ProductEntity, ProductLogEntity } from "..";
 
 /**产品服务 */
 @Injectable()
@@ -28,8 +28,8 @@ export class ProductService extends OptionService<
     protected readonly productLogRepository: Repository<ProductLogEntity>,
   ) {
     super(
-      'id',
-      'product',
+      "id",
+      "product",
       operateSrv,
       queueSrv,
       productRepository,

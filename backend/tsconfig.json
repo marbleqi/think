@@ -34,6 +34,8 @@
       "@ali/*": ["libs/ali/src/*"],
       "@tencent": ["libs/tencent/src"],
       "@tencent/*": ["libs/tencent/src/*"],
+      "@chat": ["libs/chat/src"],
+      "@chat/*": ["libs/chat/src/*"],
       "@default": ["apps/api/src/default"],
       "@default/*": ["apps/api/src/default/*"]
     }

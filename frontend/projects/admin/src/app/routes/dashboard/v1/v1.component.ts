@@ -8,7 +8,7 @@ import { G2BarModule } from '@delon/chart/bar';
 import { G2MiniBarModule } from '@delon/chart/mini-bar';
 import { G2TimelineModule } from '@delon/chart/timeline';
 import { _HttpClient } from '@delon/theme';
-import { SHARED_IMPORTS } from '@shared';
+import { SHARED_IMPORTS } from 'shared';
 import { timer } from 'rxjs';
 
 @Component({

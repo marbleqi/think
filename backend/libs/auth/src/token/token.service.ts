@@ -1,7 +1,7 @@
 // 外部依赖
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from "@nestjs/common";
 // 内部依赖
-import { random, RedisService } from '@shared';
+import { random, RedisService } from "@shared";
 
 /**
  * 令牌服务
@@ -23,7 +23,7 @@ export class TokenService {
    */
   async index() {
     /**令牌清单 */
-    const tokens = await this.redisSrv.keys('token:*');
+    const tokens = await this.redisSrv.keys("token:*");
     /**令牌数组 */
     const result: Record<string, string>[] = [];
     for (const item of tokens) {
@@ -40,7 +40,7 @@ export class TokenService {
    */
   async count() {
     /**令牌清单 */
-    const tokens = await this.redisSrv.keys('token:*');
+    const tokens = await this.redisSrv.keys("token:*");
     return tokens.length;
   }
 
@@ -93,13 +93,13 @@ export class TokenService {
     // 更新缓存部分字段
     await this.redisSrv.hmset(
       `token:${id}:${newToken}`,
-      'code',
+      "code",
       newToken,
-      'valid',
+      "valid",
       valid,
-      'expired',
+      "expired",
       expired,
-      'updateAt',
+      "updateAt",
       Date.now(),
     );
     // 返回新的令牌信息

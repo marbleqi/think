@@ -4,9 +4,9 @@ import {
   ExecutionContext,
   Injectable,
   NestInterceptor,
-} from '@nestjs/common';
-import { Response, Request } from 'express';
-import { tap, catchError } from 'rxjs';
+} from "@nestjs/common";
+import { Response, Request } from "express";
+import { tap, catchError } from "rxjs";
 // 内部依赖
 import {
   ReqUpdate,
@@ -14,7 +14,7 @@ import {
   maskData,
   AppRequest,
   QueueService,
-} from '@shared';
+} from "@shared";
 
 /**全局拦截器
  *
@@ -51,13 +51,13 @@ export class ReqInterceptor implements NestInterceptor {
     const req: Request = context.switchToHttp().getRequest();
     /**响应上下文 */
     const res: Response = context.switchToHttp().getResponse();
-    if (req['reqId']) {
-      res.setHeader('request_id', Number(req['reqId']));
+    if (req["reqId"]) {
+      res.setHeader("request_id", Number(req["reqId"]));
     }
     return next.handle().pipe(
       // 请求异常时的处理
       catchError((err) => {
-        console.debug('此处应处理异常', err);
+        console.debug("此处应处理异常", err);
         const appReq = req as AppRequest;
         if (appReq.reqId) {
           /**更新日志记录 */
@@ -84,7 +84,7 @@ export class ReqInterceptor implements NestInterceptor {
       }),
       // 请求正常时的处理
       tap((data) => {
-        console.debug('此处应处理正常', data);
+        console.debug("此处应处理正常", data);
         const appReq = req as AppRequest;
         /**更新日志记录 */
         if (appReq.reqId) {

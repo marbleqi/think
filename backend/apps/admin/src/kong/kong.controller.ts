@@ -1,9 +1,9 @@
-import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
-import { Allow, CommonController } from '@auth';
-import { KongDto, KongService } from '@kong';
+import { Controller, Get, Param, ParseIntPipe } from "@nestjs/common";
+import { Allow, CommonController } from "@auth";
+import { KongDto, KongService } from "@kong";
 
-@Controller('kong')
-@Allow('admin')
+@Controller("kong")
+@Allow("admin")
 export class KongController extends CommonController<
   KongService,
   KongDto,
@@ -13,13 +13,13 @@ export class KongController extends CommonController<
     super(commonSrv);
   }
 
-  @Get('report/:id')
-  report(@Param('id', ParseIntPipe) id: number) {
+  @Get("report/:id")
+  report(@Param("id", ParseIntPipe) id: number) {
     return this.commonSrv.report(id);
   }
 
-  @Get('plugin/:id')
-  plugin(@Param('id', ParseIntPipe) id: number) {
+  @Get("plugin/:id")
+  plugin(@Param("id", ParseIntPipe) id: number) {
     return this.commonSrv.plugin(id);
   }
 }

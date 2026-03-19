@@ -6,14 +6,14 @@ import {
   Post,
   Body,
   Req,
-} from '@nestjs/common';
-import type { Request } from 'express';
+} from "@nestjs/common";
+import type { Request } from "express";
 // 内部依赖
-import type { AppRequest } from '@shared';
-import { ShortcutEntity, ShortcutService } from '..';
+import type { AppRequest } from "@shared";
+import { ShortcutEntity, ShortcutService } from "..";
 
 /**快捷方式控制器 */
-@Controller('shortcut')
+@Controller("shortcut")
 export class ShortcutController {
   /**
    * 构造函数
@@ -30,7 +30,7 @@ export class ShortcutController {
   async show(@Req() req: Request) {
     const userId = (req as AppRequest).user?.id;
     if (!userId) {
-      throw new UnauthorizedException('用户未登录');
+      throw new UnauthorizedException("用户未登录");
     }
     return this.shortcutSrv.show(userId);
   }
@@ -44,7 +44,7 @@ export class ShortcutController {
   async update(@Body() value: ShortcutEntity, @Req() req: Request) {
     const userId = (req as AppRequest).user?.id;
     if (!userId) {
-      throw new UnauthorizedException('用户未登录');
+      throw new UnauthorizedException("用户未登录");
     }
     return this.shortcutSrv.update(value);
   }

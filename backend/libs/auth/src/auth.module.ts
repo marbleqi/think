@@ -1,8 +1,8 @@
 // 外部依赖
-import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { Module } from "@nestjs/common";
+import { TypeOrmModule } from "@nestjs/typeorm";
 // 内部依赖
-import { SharedModule } from '@shared';
+import { SharedModule } from "@shared";
 import {
   UserEntity,
   UserLogEntity,
@@ -22,7 +22,7 @@ import {
   ShortcutController,
   ProductController,
   CategoryController,
-} from '@auth';
+} from "@auth";
 
 @Module({
   imports: [

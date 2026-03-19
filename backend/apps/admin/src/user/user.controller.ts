@@ -1,12 +1,12 @@
 // 外部依赖
-import { Controller } from '@nestjs/common';
+import { Controller } from "@nestjs/common";
 // 内部依赖
-import { Allow, UserService, CommonController } from '@auth';
-import { UserCreateDto, UserUpdateDto } from '..';
+import { Allow, UserService, CommonController } from "@auth";
+import { UserCreateDto, UserUpdateDto } from "..";
 
 /**管理用户控制器 */
-@Controller('admin/user')
-@Allow('admin')
+@Controller("admin/user")
+@Allow("admin")
 export class UserController extends CommonController<
   UserService,
   UserCreateDto,

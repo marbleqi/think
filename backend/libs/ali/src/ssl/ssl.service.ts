@@ -1,7 +1,7 @@
 // 外部依赖
-import { Injectable } from '@nestjs/common';
+import { Injectable } from "@nestjs/common";
 // 内部依赖
-import { Config, ApiService, ApiResponse } from '..';
+import { Config, ApiService, ApiResponse } from "..";
 
 @Injectable()
 export class SslService {
@@ -15,10 +15,10 @@ export class SslService {
   ): Promise<ApiResponse> {
     const config: Config = {
       id: KeyId,
-      method: 'POST',
-      endpoint: 'https://cas.aliyuncs.com',
-      action: 'ListUserCertificateOrder',
-      version: '2020-04-07',
+      method: "POST",
+      endpoint: "https://cas.aliyuncs.com",
+      action: "ListUserCertificateOrder",
+      version: "2020-04-07",
       params: { CurrentPage, ShowSize, ...params },
     };
     return await this.apiSrv.api(config);
@@ -31,10 +31,10 @@ export class SslService {
   ): Promise<ApiResponse> {
     const config: Config = {
       id: KeyId,
-      method: 'POST',
-      endpoint: 'https://cas.aliyuncs.com',
-      action: 'DescribeUserCertificateList',
-      version: '2018-07-13',
+      method: "POST",
+      endpoint: "https://cas.aliyuncs.com",
+      action: "DescribeUserCertificateList",
+      version: "2018-07-13",
       params: { CurrentPage, ShowSize },
     };
     return await this.apiSrv.api(config);
@@ -43,10 +43,10 @@ export class SslService {
   async show(KeyId: number, OrderId: number): Promise<ApiResponse> {
     const config: Config = {
       id: KeyId,
-      method: 'POST',
-      endpoint: 'https://cas.aliyuncs.com',
-      action: 'DescribeCertificateState',
-      version: '2020-04-07',
+      method: "POST",
+      endpoint: "https://cas.aliyuncs.com",
+      action: "DescribeCertificateState",
+      version: "2020-04-07",
       params: { OrderId },
     };
     return await this.apiSrv.api(config);
@@ -59,19 +59,19 @@ export class SslService {
   ): Promise<ApiResponse> {
     const config: Config = {
       id: KeyId,
-      method: 'POST',
-      endpoint: 'https://cas.aliyuncs.com',
-      action: 'CreateDVOrderAudit',
-      version: '2018-07-13',
+      method: "POST",
+      endpoint: "https://cas.aliyuncs.com",
+      action: "CreateDVOrderAudit",
+      version: "2018-07-13",
       params: {
         InstanceId,
         Domain,
-        City: 'zhengzhou',
-        DomainVerifyType: 'DNS',
-        Email: 'marbleqi@163.com',
-        Mobile: '13673618697',
-        Province: 'henan',
-        Username: '戚晓栋',
+        City: "zhengzhou",
+        DomainVerifyType: "DNS",
+        Email: "marbleqi@163.com",
+        Mobile: "13673618697",
+        Province: "henan",
+        Username: "戚晓栋",
       },
     };
     return await this.apiSrv.api(config);

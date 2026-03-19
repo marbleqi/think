@@ -6,15 +6,15 @@ import {
   ExecutionContext,
   HttpStatus,
   Injectable,
-} from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
-import { AddressInfo } from 'net';
-import { Response, Request } from 'express';
+} from "@nestjs/common";
+import { Reflector } from "@nestjs/core";
+import { AddressInfo } from "net";
+import { Response, Request } from "express";
 // 内部依赖
-import { ReqCreate, ReqService } from '@shared';
-import { UserService, TokenService } from '@auth';
+import { ReqCreate, ReqService } from "@shared";
+import { UserService, TokenService } from "@auth";
 
-const PUBLIC_PATH_PREFIX = '/passport';
+const PUBLIC_PATH_PREFIX = "/passport";
 
 /**全局路由守卫
  *
@@ -81,7 +81,7 @@ export class TokenGuard implements CanActivate {
     } as ReqCreate;
     if (url.startsWith(PUBLIC_PATH_PREFIX)) {
       // 将请求ID添加到请求上下文
-      req['reqId'] = await this.reqSrv.insert(params);
+      req["reqId"] = await this.reqSrv.insert(params);
       // 返回验证通过
       return true;
     }
@@ -103,7 +103,7 @@ export class TokenGuard implements CanActivate {
         endAt: Date.now(),
       } as ReqCreate);
       // 将请求ID设置到响应头
-      res.setHeader('request_id', reqId);
+      res.setHeader("request_id", reqId);
       // 抛出异常。注：路由守卫抛出异常后，将不会再调用拦截器，请求也不会再转发到控制器
       if (status === 403) {
         throw new ForbiddenException(result);
@@ -113,10 +113,10 @@ export class TokenGuard implements CanActivate {
     };
     // 如果用户ID无效，则令牌验证无效
     if (!userId) {
-      await send('用户令牌验证无效！');
+      await send("用户令牌验证无效！");
       return false;
     }
-    const user = await this.userSrv.show(userId, 'status');
+    const user = await this.userSrv.show(userId, "status");
     if (!user) {
       await send(`用户ID${userId}验证无效！`);
       return false;
@@ -128,16 +128,16 @@ export class TokenGuard implements CanActivate {
     // 用户身份已校验，更新用户的最后会话时间
     await this.userSrv.session(userId);
     /**当前路由需要角色 */
-    const role = this.reflector.get<string>('role', context.getHandler());
+    const role = this.reflector.get<string>("role", context.getHandler());
     // 当路由需要角色授权时
     if (role && !user?.roles?.includes(role)) {
       await send(`用户${user?.email}没有被授权访问该接口！`, 403);
       return false;
     }
     // 其余情况为验证通过，在请求上下文中记录用户信息
-    req['user'] = user;
+    req["user"] = user;
     // 将请求ID添加到请求上下文
-    req['reqId'] = await this.reqSrv.insert({ ...params, userId });
+    req["reqId"] = await this.reqSrv.insert({ ...params, userId });
     // 返回验证通过
     return true;
   }
